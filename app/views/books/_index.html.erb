@@ -4,7 +4,7 @@
       <th></th>
       <th>Title</th>
       <th>Opinion</th>
-      <th colspan="4"></th>
+      <th colspan="5"></th>
     </tr>
   </thead>
   <tbody>
@@ -32,6 +32,13 @@
   <% end %>
 
 </td>
+
+<td>
+
+  <p>コメント数：<%= @book.post_comments.count %></p>
+
+</td>
+
 
 
       </tr>

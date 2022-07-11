@@ -18,6 +18,8 @@
           <td><%= link_to @book.title, @book %></td>
           <td><%= @book.body %></td>
 
+
+
           <td>
          <% if @book.favorited_by?(current_user) %>
     <p>
@@ -32,18 +34,52 @@
       <% end %>
     </p>
   <% end %>
+</td>
+
+<td>
+
+  <p>コメント数：<%= @book.post_comments.count %></p>
 
 </td>
+
+
+
+
 
           <% if @book.user == current_user %>
             <td><%= link_to 'Edit', edit_book_path(@book), class: "btn btn-sm btn-success edit_book_#{@book.id}" %></td>
             <td><%= link_to 'Destroy', @book, method: :delete, data: { confirm: '本当に消しますか？' }, class: "btn btn-sm btn-danger destroy_book_#{@book.id}" %></td>
           <% end %>
         </tr>
+
+
       </table>
 
+<div>
+<% @book.post_comments.each do |post_comment| %>
 
+            <p><%= image_tag @book.user.get_profile_image(100,100) %>
+            <%= post_comment.comment %>
+            <% if post_comment.user == current_user %>
+      <%= link_to "Destroy", book_post_comment_path(post_comment.book, post_comment), method: :delete, class: "btn btn-sm btn-danger destroy_book_#{@book.id}"  %>
+    <% end %>
+    </p>
+      <%= link_to(@book.user)  do %><%= @book.user.name %><% end %>
+            <% end %>
+
+</div>
+<div>
+  <%= form_with model: [@book, @post_comment] do |f| %>
+    <%= f.text_area :comment, rows: '5', placeholder: "" %>
+    <%= f.submit "送信" %>
+  <% end %>
+</div>
 
     </div>
+
+
+    <div>
+
+</div>
   </div>
 </div>
