@@ -38,7 +38,7 @@
 
 <td>
 
-  <p>コメント数：<%= @book.post_comments.count %></p>
+  <p>コメント数：<%= @book.book_comments.count %></p>
 
 </td>
 
@@ -55,25 +55,33 @@
 
       </table>
 
-<div>
-<% @book.post_comments.each do |post_comment| %>
 
-            <p><%= image_tag @book.user.get_profile_image(100,100) %>
-            <%= post_comment.comment %>
-            <% if post_comment.user == current_user %>
-      <%= link_to "Destroy", book_post_comment_path(post_comment.book, post_comment), method: :delete, class: "btn btn-sm btn-danger destroy_book_#{@book.id}"  %>
+
+<div>
+  <p>コメント件数：<%= @book.book_comments.count %></p>
+  <% @book.book_comments.each do |book_comment| %>
+    <p><%= image_tag book_comment.user.get_profile_image(100,100) %><%= book_comment.comment %>
+
+    <% if book_comment.user == current_user %>
+    <%= link_to "Destroy", book_book_comment_path(book_comment.book, book_comment), method: :delete, class: "btn btn-sm btn-danger destroy_book_#{@book.id}"  %>
     <% end %>
-    </p>
-      <%= link_to(@book.user)  do %><%= @book.user.name %><% end %>
-            <% end %>
 
+    </p>
+    <%= link_to book_comment.user.name, book_comment.user %>
+
+  <% end %>
 </div>
+
 <div>
-  <%= form_with model: [@book, @post_comment] do |f| %>
+  <%= form_with model: [@book, @book_comment] do |f| %>
     <%= f.text_area :comment, rows: '5', placeholder: "" %>
     <%= f.submit "送信" %>
   <% end %>
 </div>
+
+
+
+
 
     </div>
 
